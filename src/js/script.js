@@ -52,4 +52,19 @@ $(document).ready(function(){
     $('.overlay, #consultation, #order, #thank_you').fadeOut('fast');
   });
 
+
+  $('form').submit(function(e) {
+    e.preventDefault();
+    $.ajax({
+      type: "POST",
+      url: "mailer/smart.php",
+      data: $(this).serialize()
+    }).done(function() {
+      $(this).find("input").value("");
+      $('#consultation, #order').fadeOut();
+      $('.overlay, #thanks').fadeIn('fast');
+      $('form').trigger('reset');
+    });
+    return false;
+  });
 });
